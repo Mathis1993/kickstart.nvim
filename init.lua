@@ -401,7 +401,33 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
     end,
   },
-
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+      'MunifTanjim/nui.nvim',
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = function()
+      require('neo-tree').setup {
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false,
+            hide_gitignored = false,
+            hide_hidden = false,
+          },
+          follow_current_file = {
+            enabled = true,
+          },
+        },
+      }
+      vim.keymap.set('n', '<C-n>', '<Cmd>Neotree float toggle<CR>', { desc = 'Toggle [N]eotree' })
+      vim.keymap.set('n', '<leader>nr', '<Cmd>Neotree float reveal<CR>', { desc = '[N]eotree [R]eveal' })
+      vim.keymap.set('n', '<leader>ns', '<Cmd>Neotree left toggle<CR>', { desc = '[N]eotree [S]idebar toggle' })
+    end,
+  },
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
